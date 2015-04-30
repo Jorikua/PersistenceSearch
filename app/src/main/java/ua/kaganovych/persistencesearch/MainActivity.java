@@ -12,19 +12,18 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity{
 
     private EditText mSearch;
     private ImageView mSearchIcon;
     private RelativeLayout mMainLayout;
-    private ListView mListView;
+    private CustomListView mListView;
     private CustomAdapter mAdapter;
     private ArrayList<Item> mList;
     private ImageView mClear;
@@ -37,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
         mSearch = (EditText) findViewById(R.id.search);
         mSearchIcon = (ImageView) findViewById(R.id.hamArrowIcon);
         mMainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
-        mListView = (ListView) findViewById(R.id.listView);
+        mListView = (CustomListView) findViewById(R.id.listView);
         mClear = (ImageView) findViewById(R.id.clear);
         mClear.setVisibility(View.GONE);
 
@@ -45,6 +44,14 @@ public class MainActivity extends ActionBarActivity {
         mList.add(new Item("One"));
         mList.add(new Item("Two"));
         mList.add(new Item("Three"));
+        mList.add(new Item("One"));
+        mList.add(new Item("Two"));
+        mList.add(new Item("Three"));
+        mList.add(new Item("One"));
+        mList.add(new Item("Two"));
+        mList.add(new Item("Three"));
+        mList.add(new Item("One"));
+        mList.add(new Item("Two"));
         mAdapter = new CustomAdapter(this, mList);
         mListView.setAdapter(mAdapter);
         mListView.setVisibility(View.GONE);
@@ -122,7 +129,6 @@ public class MainActivity extends ActionBarActivity {
                 return true;
             }
         });
-
     }
 
     public void hideKeyboard(View view) {
@@ -131,14 +137,4 @@ public class MainActivity extends ActionBarActivity {
         mSearch.clearFocus();
         mListView.setVisibility(View.GONE);
     }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.ACTION_DOWN) {
-            mSearch.clearFocus();
-            mListView.setVisibility(View.GONE);
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
 }
