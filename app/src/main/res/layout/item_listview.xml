@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
+    <ImageView
+        android:id="@+id/imageIcon"
+        android:src="@mipmap/ic_schedule_grey600_24dp"
+        android:layout_centerVertical="true"
+        android:paddingLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/suggest"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/imageIcon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/border"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E8E8E8" />
+
+</RelativeLayout>
