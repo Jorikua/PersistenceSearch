@@ -1,7 +1,6 @@
 package ua.kaganovych.persistencesearch;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -10,7 +9,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -25,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
     private CustomListView mListView;
     private CustomAdapter mAdapter;
     private ArrayList<Item> mList;
-    private ImageView mClear;
+    private ImageView mClearIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +34,8 @@ public class MainActivity extends ActionBarActivity {
         mHamArrowIcon = (ImageView) findViewById(R.id.hamArrowIcon);
         mMainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
         mListView = (CustomListView) findViewById(R.id.listView);
-        mClear = (ImageView) findViewById(R.id.clear);
-        mClear.setVisibility(View.GONE);
-
-        Button open = (Button)findViewById(R.id.buttonOpen);
-        Button close = (Button)findViewById(R.id.buttonClose);
-
-        open.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListView.setVisibility(View.VISIBLE);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-            }
-        });
-
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListView.setVisibility(View.GONE);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-            }
-        });
-
+        mClearIcon = (ImageView) findViewById(R.id.clear);
+        mClearIcon.setVisibility(View.GONE);
 
         mList = new ArrayList<>();
         mList.add(new Item("One"));
@@ -82,16 +58,16 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Item item = mAdapter.getItem(position);
                 mSearch.setText(item.suggestion);
-                mClear.setVisibility(View.GONE);
+                mClearIcon.setVisibility(View.GONE);
                 hideKeyboard(view);
             }
         });
 
-        mClear.setOnClickListener(new View.OnClickListener() {
+        mClearIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mSearch.setText("");
-                mClear.setVisibility(View.GONE);
+                mClearIcon.setVisibility(View.GONE);
             }
         });
 
@@ -104,9 +80,9 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!TextUtils.isEmpty(charSequence)) {
-                    mClear.setVisibility(View.VISIBLE);
+                    mClearIcon.setVisibility(View.VISIBLE);
                 } else {
-                    mClear.setVisibility(View.GONE);
+                    mClearIcon.setVisibility(View.GONE);
                 }
             }
 
@@ -120,7 +96,12 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (hasFocus) {
-                    mListView.setVisibility(View.VISIBLE);
+                    mListView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mListView.setVisibility(View.VISIBLE);
+                        }
+                    }, 64);
                 }
             }
         });
