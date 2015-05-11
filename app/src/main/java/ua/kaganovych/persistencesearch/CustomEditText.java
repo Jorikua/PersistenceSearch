@@ -3,31 +3,30 @@ package ua.kaganovych.persistencesearch;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 public class CustomEditText extends EditText {
 
-    public interface onArrowDownListener {
+    public interface onEventListener {
         boolean onArrowDown();
         boolean onSearchSubmitted();
     }
 
-    private onArrowDownListener mCallback;
+    private onEventListener mCallback;
 
     public CustomEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setCallback(onArrowDownListener mCallback) {
+    public void setCallback(onEventListener mCallback) {
         this.mCallback = mCallback;
     }
 
+
     @Override
     public boolean dispatchKeyEventPreIme(KeyEvent event) {
-        Log.d("TAG", "dispatchKeyEventPreIme(" + event + ")");
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             KeyEvent.DispatcherState state = getKeyDispatcherState();
             if (state != null) {

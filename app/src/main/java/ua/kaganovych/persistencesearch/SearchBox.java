@@ -7,6 +7,6 @@ import android.util.AttributeSet;
 public class SearchBox extends CardView {
     public SearchBox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        inflate(context, R.layout.activity_main, this);
+        inflate(context, R.id.cardView, this);
     }
 }

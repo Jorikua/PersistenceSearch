@@ -1,12 +1,16 @@
 package ua.kaganovych.persistencesearch;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -24,18 +28,24 @@ public class MainActivity extends ActionBarActivity {
     private CustomAdapter mAdapter;
     private ArrayList<Item> mList;
     private ImageView mClearIcon;
+    private View mDimView;
+    private DrawerArrowDrawableToggle mToggle;
+
+    public static final int ANIMATION_DURATION = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mDimView = findViewById(R.id.dimView);
         mSearch = (CustomEditText) findViewById(R.id.search);
         mHamArrowIcon = (ImageView) findViewById(R.id.hamArrowIcon);
         mMainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
         mListView = (CustomListView) findViewById(R.id.listView);
         mClearIcon = (ImageView) findViewById(R.id.clear);
         mClearIcon.setVisibility(View.GONE);
+
 
         mList = new ArrayList<>();
         mList.add(new Item("One"));
@@ -60,6 +70,20 @@ public class MainActivity extends ActionBarActivity {
                 mSearch.setText(item.suggestion);
                 mClearIcon.setVisibility(View.GONE);
                 hideKeyboard(view);
+            }
+        });
+
+
+        mToggle = new DrawerArrowDrawableToggle(this, this);
+        mHamArrowIcon.setImageDrawable(mToggle);
+
+
+        mHamArrowIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mToggle.getPosition() == 1) {
+                    hideKeyboard(view);
+                }
             }
         });
 
@@ -100,13 +124,15 @@ public class MainActivity extends ActionBarActivity {
                         @Override
                         public void run() {
                             mListView.setVisibility(View.VISIBLE);
+                            animateToggle(true);
+                            dimBackground(true);
                         }
                     }, 64);
                 }
             }
         });
 
-        mSearch.setCallback(new CustomEditText.onArrowDownListener() {
+        mSearch.setCallback(new CustomEditText.onEventListener() {
             @Override
             public boolean onArrowDown() {
                 hideKeyboard(mSearch);
@@ -119,13 +145,6 @@ public class MainActivity extends ActionBarActivity {
                 return true;
             }
         });
-
-        mHamArrowIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideKeyboard(view);
-            }
-        });
     }
 
     public void hideKeyboard(View view) {
@@ -133,5 +152,44 @@ public class MainActivity extends ActionBarActivity {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         mSearch.clearFocus();
         mListView.setVisibility(View.GONE);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dimBackground(false);
+            }
+        }, 70);
+        animateToggle(false);
+    }
+
+    public void dimBackground(final boolean show) {
+        mDimView.setEnabled(show);
+        ViewCompat.animate(mDimView)
+                .alpha(show ? 1 : 0)
+                .setDuration(ANIMATION_DURATION)
+                .setInterpolator(new DecelerateInterpolator())
+                .setListener(new ViewPropertyAnimatorListener() {
+                    @Override
+                    public void onAnimationStart(View view) {
+                        mDimView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(View view) {
+                        mDimView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(View view) {
+
+                    }
+                })
+                .withLayer()
+                .start();
+    }
+
+    public void animateToggle(boolean show) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mToggle, DrawerArrowDrawableToggle.PROGRESS, show ? 0 : 1, show ? 1 : 0);
+        animator.setDuration(200)
+                .start();
     }
 }
