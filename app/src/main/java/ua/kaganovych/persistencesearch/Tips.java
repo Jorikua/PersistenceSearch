@@ -1,8 +1,8 @@
 package ua.kaganovych.persistencesearch;
 
-public class Item {
+public class Tips {
 
-    public Item(String suggestion) {
+    public Tips(String suggestion) {
         this.suggestion = suggestion;
     }
 

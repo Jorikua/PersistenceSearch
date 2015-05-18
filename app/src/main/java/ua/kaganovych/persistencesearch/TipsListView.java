@@ -5,10 +5,10 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.widget.ListView;
 
-public class CustomListView extends ListView {
+public class TipsListView extends ListView {
 
 
-    public CustomListView(Context context, AttributeSet attrs) {
+    public TipsListView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

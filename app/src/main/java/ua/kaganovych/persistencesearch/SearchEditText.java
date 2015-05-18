@@ -7,7 +7,7 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
-public class CustomEditText extends EditText {
+public class SearchEditText extends EditText {
 
     public interface onEventListener {
         boolean onArrowDown();
@@ -16,7 +16,7 @@ public class CustomEditText extends EditText {
 
     private onEventListener mCallback;
 
-    public CustomEditText(Context context, AttributeSet attrs) {
+    public SearchEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

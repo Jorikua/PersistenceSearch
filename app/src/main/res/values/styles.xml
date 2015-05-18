@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">#A4BC</item>
+        <item name="colorPrimaryDark">#F67A04</item>
     </style>
 
 </resources>

@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter<Item> {
-    public CustomAdapter(Context context, ArrayList<Item> list) {
+public class TipsAdapter extends ArrayAdapter<Tips> {
+    public TipsAdapter(Context context, ArrayList<Tips> list) {
         super(context, 0, list);
     }
 
@@ -21,12 +21,12 @@ public class CustomAdapter extends ArrayAdapter<Item> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Item item = getItem(position);
+        Tips item = getItem(position);
         ViewHolder viewHolder;
 
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_listview, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tips_listview, parent, false);
             viewHolder.mSuggest = (TextView)convertView.findViewById(R.id.suggest);
             convertView.setTag(viewHolder);
         } else {

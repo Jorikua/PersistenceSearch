@@ -14,22 +14,24 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    private CustomEditText mSearch;
+    private SearchEditText mSearch;
     private ImageView mHamArrowIcon;
-    private RelativeLayout mMainLayout;
-    private CustomListView mListView;
-    private CustomAdapter mAdapter;
-    private ArrayList<Item> mList;
+    private TipsListView mTipsListView;
+    private TipsAdapter mTipsAdapter;
+    private ArrayList<Tips> mTipsList;
     private ImageView mClearIcon;
     private View mDimView;
     private DrawerArrowDrawableToggle mToggle;
+    private ContactAdapter mContactAdapter;
+    private ListView mContactListView;
+    private ArrayList<Contact> mContactList;
 
     public static final int ANIMATION_DURATION = 500;
 
@@ -38,40 +40,53 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mContactListView = (ListView)findViewById(R.id.contactList);
         mDimView = findViewById(R.id.dimView);
-        mSearch = (CustomEditText) findViewById(R.id.search);
+        mSearch = (SearchEditText) findViewById(R.id.search);
         mHamArrowIcon = (ImageView) findViewById(R.id.hamArrowIcon);
-        mMainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
-        mListView = (CustomListView) findViewById(R.id.listView);
+        mTipsListView = (TipsListView) findViewById(R.id.listView);
         mClearIcon = (ImageView) findViewById(R.id.clear);
         mClearIcon.setVisibility(View.GONE);
 
+        mTipsList = new ArrayList<>();
+        mTipsList.add(new Tips("One"));
+        mTipsList.add(new Tips("Two"));
+        mTipsList.add(new Tips("Three"));
+        mTipsList.add(new Tips("One"));
+        mTipsList.add(new Tips("Two"));
+        mTipsList.add(new Tips("Three"));
+        mTipsList.add(new Tips("One"));
+        mTipsList.add(new Tips("Two"));
+        mTipsList.add(new Tips("Three"));
+        mTipsList.add(new Tips("One"));
+        mTipsList.add(new Tips("Two"));
+        mTipsAdapter = new TipsAdapter(this, mTipsList);
+        mTipsListView.setAdapter(mTipsAdapter);
+        mTipsListView.setVisibility(View.GONE);
 
-        mList = new ArrayList<>();
-        mList.add(new Item("One"));
-        mList.add(new Item("Two"));
-        mList.add(new Item("Three"));
-        mList.add(new Item("One"));
-        mList.add(new Item("Two"));
-        mList.add(new Item("Three"));
-        mList.add(new Item("One"));
-        mList.add(new Item("Two"));
-        mList.add(new Item("Three"));
-        mList.add(new Item("One"));
-        mList.add(new Item("Two"));
-        mAdapter = new CustomAdapter(this, mList);
-        mListView.setAdapter(mAdapter);
-        mListView.setVisibility(View.GONE);
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mTipsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Item item = mAdapter.getItem(position);
+                Tips item = mTipsAdapter.getItem(position);
                 mSearch.setText(item.suggestion);
                 mClearIcon.setVisibility(View.GONE);
                 hideKeyboard(view);
             }
         });
+
+        String[] names = new String[] {"Vasya", "Petya", "Kolya", "Serega", "Chernii", "Pepel", "Seva", "Shurik", "Uba",
+                "Ches", "Kirill", "Toster", "Chipsi", "Karavan", "Omlet", "James", "Bond", "Iron Man", "Hulk", "Thor"};
+        String[] cities = new String[] {"Dnepr", "Kiev", "Sloch", "Morjva", "Mars", "Tam", "London", "Capital", "Motherland", "Nowhere",
+                "Somewhere", "Odindva", "Paris", "Valava", "Prussia", "Bratislava", "Kukuruza", "Vienna", "Berlin", "Lvov"};
+
+        mContactList = new ArrayList<>();
+
+        for (int i = 0; i < names.length; i++) {
+            mContactList.add(new Contact(names[i], cities[i]));
+        }
+
+        mContactAdapter = new ContactAdapter(this, mContactList);
+        mContactListView.setAdapter(mContactAdapter);
 
 
         mToggle = new DrawerArrowDrawableToggle(this, this);
@@ -120,10 +135,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (hasFocus) {
-                    mListView.postDelayed(new Runnable() {
+                    mTipsListView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            mListView.setVisibility(View.VISIBLE);
+                            mTipsListView.setVisibility(View.VISIBLE);
                             animateToggle(true);
                             dimBackground(true);
                         }
@@ -132,7 +147,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        mSearch.setCallback(new CustomEditText.onEventListener() {
+        mSearch.setCallback(new SearchEditText.onEventListener() {
             @Override
             public boolean onArrowDown() {
                 hideKeyboard(mSearch);
@@ -151,7 +166,7 @@ public class MainActivity extends ActionBarActivity {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         mSearch.clearFocus();
-        mListView.setVisibility(View.GONE);
+        mTipsListView.setVisibility(View.GONE);
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
