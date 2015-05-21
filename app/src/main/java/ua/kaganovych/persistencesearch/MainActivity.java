@@ -2,8 +2,8 @@ package ua.kaganovych.persistencesearch;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.app.ActionBarActivity;
@@ -173,8 +173,8 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
@@ -182,7 +182,7 @@ public class MainActivity extends ActionBarActivity {
 
     private void displayContactsFragment() {
         mContactFragment = new ContactFragment();
-        mFragmentManager = getFragmentManager();
+        mFragmentManager = getSupportFragmentManager();
         mFragmentManager.beginTransaction()
                 .replace(R.id.container, mContactFragment)
                 .commit();
@@ -190,9 +190,9 @@ public class MainActivity extends ActionBarActivity {
 
     private void displaySearchResultsFragment() {
         mResultFragment = new SearchResultFragment();
-        mFragmentManager = getFragmentManager();
+        mFragmentManager = getSupportFragmentManager();
         mFragmentManager.beginTransaction()
-                .setCustomAnimations(0, 0, 0, R.anim.abc_fade_out)
+                .setCustomAnimations(0, 0, R.anim.abc_fade_in, R.anim.abc_fade_out)
                 .replace(R.id.container, mResultFragment)
                 .addToBackStack(null)
                 .commit();
