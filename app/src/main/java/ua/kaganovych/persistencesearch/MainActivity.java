@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity {
         mTipsListView.setAdapter(mTipsAdapter);
         mTipsListView.setVisibility(View.GONE);
 
-        displayContactsFragment(0, 0);
+        displayContactsFragment();
 
         mTipsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
                     mSearch.setText("");
                     animateToggle(false);
                     if (!mContactFragment.isVisible()) {
-                        displayContactsFragment(R.animator.fade_in, R.animator.fade_out);
+                        onBackPressed();
                     }
                 }
             }
@@ -171,13 +171,20 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
-    private void displayContactsFragment(int enterAnimation, int exitAnimation) {
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void displayContactsFragment() {
         mContactFragment = new ContactFragment();
         mFragmentManager = getFragmentManager();
         mFragmentManager.beginTransaction()
-                .setCustomAnimations(enterAnimation, exitAnimation)
                 .replace(R.id.container, mContactFragment)
-                .addToBackStack(null)
                 .commit();
     }
 
@@ -185,12 +192,14 @@ public class MainActivity extends ActionBarActivity {
         mResultFragment = new SearchResultFragment();
         mFragmentManager = getFragmentManager();
         mFragmentManager.beginTransaction()
+                .setCustomAnimations(0, 0, 0, R.anim.abc_fade_out)
                 .replace(R.id.container, mResultFragment)
+                .addToBackStack(null)
                 .commit();
     }
 
     public void hideKeyboard(View view) {
-                mTipsListView.setVisibility(View.GONE);
+        mTipsListView.setVisibility(View.GONE);
         dimBackground(false);
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
