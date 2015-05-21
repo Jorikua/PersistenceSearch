@@ -13,89 +13,88 @@
         android:focusableInTouchMode="true" />
 
     <View
+        android:id="@+id/searchboxBackground"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/orange" />
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchboxBackground" />
+
+    <View
         android:id="@+id/dimView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#8000"
         android:visibility="gone" />
 
-    <View
-        android:id="@+id/searchboxBackground"
-        android:background="@color/orange"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"/>
+        android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        card_view:cardBackgroundColor="@android:color/white">
-
-        <RelativeLayout
-            android:id="@+id/searchLayout"
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
+            android:layout_margin="8dp"
+            card_view:cardBackgroundColor="@android:color/white">
 
-
-            <ImageView
-                android:id="@+id/hamArrowIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/search"
-                android:layout_marginLeft="10dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless" />
-
-            <ua.kaganovych.persistencesearch.SearchEditText
-                android:id="@+id/search"
+            <RelativeLayout
+                android:id="@+id/searchLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_toLeftOf="@+id/clear"
-                android:layout_toRightOf="@+id/hamArrowIcon"
-                android:background="@android:color/transparent"
-                android:hint="Search"
-                android:imeOptions="actionSearch"
-                android:singleLine="true" />
+                android:animateLayoutChanges="true">
 
-            <ImageView
-                android:id="@+id/clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/search"
-                android:layout_marginRight="10dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_close_black_24dp" />
+                <ImageView
+                    android:id="@+id/hamArrowIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/search"
+                    android:layout_marginLeft="10dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless" />
 
+                <ua.kaganovych.persistencesearch.SearchEditText
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toLeftOf="@+id/clear"
+                    android:layout_toRightOf="@+id/hamArrowIcon"
+                    android:background="@android:color/transparent"
+                    android:hint="Search"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
 
-            <ua.kaganovych.persistencesearch.TipsListView
-                android:id="@+id/listView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/search"
-                android:background="@android:color/white"
-                android:divider="@android:color/white" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/search"
+                    android:layout_marginRight="10dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_close_black_24dp" />
 
-    </android.support.v7.widget.CardView>
+                <ua.kaganovych.persistencesearch.TipsListView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/search"
+                    android:background="@android:color/white"
+                    android:divider="@android:color/white" />
+            </RelativeLayout>
 
-    <ListView
-        android:id="@+id/contactList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/searchboxBackground">
-
-    </ListView>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
 
 
 </RelativeLayout>
